@@ -1,4 +1,5 @@
 import math
+from bitarray import bitarray
 
 class BloomFilter():
     def __init__(self, num_of_itens: int, false_pos_prob: float):
@@ -22,6 +23,10 @@ class BloomFilter():
         self.size = self._calculate_size(num_of_itens, false_pos_prob)
         self.hash_count = self._calculate_hash_functions_count(
             self.size, num_of_itens)
+        
+        self.bit_array = bitarray(self.size)
+        self.bit_array.setall(0)
+
 
     @classmethod
     def _calculate_size(cls, n: int, p: float):
