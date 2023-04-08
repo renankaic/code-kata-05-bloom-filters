@@ -24,8 +24,29 @@ class BloomFilter():
             self.size, num_of_itens)
 
     @classmethod
-    def _calculate_size(cls, num_of_itens: int, false_pos_prob: float):
-        m = -((num_of_itens * math.log(false_pos_prob)) / (math.log(2) ** 2))
+    def _calculate_size(cls, n: int, p: float):
+        """
+        Calculates the size of bloom filter based on number of items and the desired false positive probability
+
+        Parameters:
+        - n (int): The number of items that may be stored in the filter.
+        - p (float): A decimal representing the desired false positive probability
+
+        Returns:
+        - int: The size of the Bloom filter, calculated based on the number of items and false positive probability
+
+        Note:
+        A Bloom filter is a probabilistic data structure that uses multiple hash functions
+        to represent a set of items. It can return false positives, meaning that it may indicate
+        that an item is in the set when it is not, but it will NEVER return false negatives 
+        (meaning that it will never indicate that an item is not in the set when it is)
+
+        The false positive probability `p` is the probability that a Bloom filter will indicate
+        a false positive for an item that is not in the set. The size of the Bloom filter `m` is
+        determined by the number of itens `n` and the false positive probability `p`, and
+        it affects the probability of false positives and the memory usage of the Bloom filter.
+        """
+        m = -((n * math.log(p)) / (math.log(2) ** 2))
         return int(m)
     
     @classmethod
