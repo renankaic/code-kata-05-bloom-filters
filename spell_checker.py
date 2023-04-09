@@ -1,5 +1,5 @@
 import math
-from mmh3 import mmh3
+import mmh3
 from bitarray import bitarray
 
 class BloomFilter():
