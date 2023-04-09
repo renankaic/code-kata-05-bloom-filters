@@ -44,22 +44,23 @@ class BloomFilter():
 
     def check(self, item: str) -> bool:
         """
-        Check whether the provided `item` string has the probability to exist in the bloom filter.
-        It hashes the 'item' with Mumur 3 and checks if all the generated hashes exists in the filter.   
+        Check whether the provided `item` string possibly exists in the bloom filter.
+        This is done by hashing the 'item' using Mumur 3, 
+        and verifying that all generated hashes exists in the Bloom Filter 'bit_array'
         
         Parameters:
-        item (str): The string to be checked whether exists
+        item (str): The string to be checked for existence in Bloom Filter
 
         Returns:
         bool: 
-            - 'True' when the item has probability to exist (read 'Notes')
-            - 'False' when it doesn't exist
+            - 'True' when the `item` possibly exists in the Bloom Filter (see `Notes`)
+            - 'False' when it does not exist in the Bloom Filter
 
         Notes:
-        It may return false positives based on the `self.false_pos_prob` value 
+        It may return false positives based on the `self.false_pos_prob` value.
         (that is, saying that the item has probability to exist even when, in fact, it does not exist) 
-        But it will NEVER return a false negatives
-        (that is, when said that it doesn't exist, it really doesn't exist)
+        However, it will NEVER return a false negative
+        (which means that if it indicates that an item doesn't exist, it really doesn't exist)
         """
         for i in range(self.hash_count):
             hsh = (mmh3.hash(item, i)) % self.size
