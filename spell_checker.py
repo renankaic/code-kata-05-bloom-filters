@@ -17,6 +17,7 @@ class BloomFilter():
         false_pos_prob (float): A decimal representing the false positive probability.
         size (int): The size of the bloom filter based on the number of items and false positive probability.
         hash_count (int): The number of hash functions to be used.
+        bit_array (bitarray): The array of bits
         """
         
         self.num_of_itens = num_of_itens
