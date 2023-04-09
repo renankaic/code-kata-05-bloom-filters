@@ -36,7 +36,7 @@ class SpellChecker():
                     print("Please, type a word to check!")
                     continue
 
-                if self._bloom_filter.check(word_to_check):
+                if self.check(word_to_check):
                     print(
                         f"The word '{word_to_check}' probably exist in the dictionary!\n")
                 else:
@@ -45,6 +45,18 @@ class SpellChecker():
             except KeyboardInterrupt:
                 print("\nExiting...")
                 break
+
+    def check(self, word: str) -> bool:
+        """
+        Checks whether `word` probably exists in the loaded word list.
+
+        Parameters:
+        word (str): String containing the word to be checked
+
+        Return:
+        bool: True if probably exists, or False when definitely doesn't exist
+        """
+        return self._bloom_filter.check(word)
 
     @classmethod
     def _create_word_list(cls, wordlist_file: str) -> List[str]:
