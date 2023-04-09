@@ -1,4 +1,5 @@
 import math
+from mmh3 import mmh3
 from bitarray import bitarray
 
 class BloomFilter():
@@ -27,6 +28,19 @@ class BloomFilter():
         self.bit_array = bitarray(self.size)
         self.bit_array.setall(0)
 
+    def add(self, item: str):
+        """
+        'Adds' an item to the Bloom Filter by generating `self.hash_counts` hashed numbers
+        from the `item` content and setting the respective index of the `bit_array` as 1
+        This process uses multiple independent hash functions to increase the accuracy of the Bloom filter 
+        and reduce the chance of false positives.
+
+        Parameters:
+        item (str): String to be hashed and "added" to the Bloom filter
+        """
+        for i in range(self.hash_count):
+            hsh = mmh3.hash(item, i) % self.size
+            self.bit_array[hsh] = True
 
     @classmethod
     def _calculate_size(cls, n: int, p: float):
