@@ -41,7 +41,7 @@ class BloomFilter():
         item (str): String to be hashed and "added" to the Bloom filter
         """
         for i in range(self.hash_count):
-            hsh = mmh3.hash(item, i) % self.size
+            hsh = mmh3.hash(item.lower(), i) % self.size
             self.bit_array[hsh] = True
 
     def check(self, item: str) -> bool:
@@ -65,7 +65,7 @@ class BloomFilter():
         (which means that if it indicates that an item doesn't exist, it really doesn't exist)
         """
         for i in range(self.hash_count):
-            hsh = (mmh3.hash(item, i)) % self.size
+            hsh = (mmh3.hash(item.lower(), i)) % self.size
             if self.bit_array[hsh] == False:
                 return False
         return True

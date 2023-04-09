@@ -1,6 +1,7 @@
 from spell_checker_bf import BloomFilter
 from typing import List
-   
+
+
 class SpellChecker():
     def __init__(self, wordlist_file: str = "wordlist.txt", fp_prob: float = 0.05) -> None:
         """
@@ -71,12 +72,12 @@ class SpellChecker():
         """
         with open(wordlist_file, "r") as words_file:
             return [w.replace("\n", "") for w in words_file.readlines()]
-    
+
     @classmethod
     def _create_bloom_filter_with_wordlist(cls, wordlist: List[str], fp_prob: float) -> BloomFilter:
         """
         Creates and return an instance of BloomFilter class containing a word list loaded into it.
-        
+
         Parameters:
         wordlist (List[str]): List of words in string
         fp_prob (float): False positive probability
@@ -86,9 +87,8 @@ class SpellChecker():
         """
         bloomF = BloomFilter(num_of_itens=len(
             wordlist), false_pos_prob=fp_prob)
-        
+
         for w in wordlist:
             bloomF.add(w)
-        
+
         return bloomF
-    
