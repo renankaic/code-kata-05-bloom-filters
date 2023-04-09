@@ -42,6 +42,31 @@ class BloomFilter():
             hsh = mmh3.hash(item, i) % self.size
             self.bit_array[hsh] = True
 
+    def check(self, item: str) -> bool:
+        """
+        Check whether the provided `item` string has the probability to exist in the bloom filter.
+        It hashes the 'item' with Mumur 3 and checks if all the generated hashes exists in the filter.   
+        
+        Parameters:
+        item (str): The string to be checked whether exists
+
+        Returns:
+        bool: 
+            - 'True' when the item has probability to exist (read 'Notes')
+            - 'False' when it doesn't exist
+
+        Notes:
+        It may return false positives based on the `self.false_pos_prob` value 
+        (that is, saying that the item has probability to exist even when, in fact, it does not exist) 
+        But it will NEVER return a false negatives
+        (that is, when said that it doesn't exist, it really doesn't exist)
+        """
+        for i in range(self.hash_count):
+            hsh = (mmh3.hash(item, i)) % self.size
+            if self.bit_array[hsh] == False:
+                return False
+        return True
+
     @classmethod
     def _calculate_size(cls, n: int, p: float):
         """
